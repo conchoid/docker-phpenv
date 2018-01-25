@@ -1,5 +1,8 @@
 #!/bin/sh
+
 set -eux
+
+# TODO: Fix package version
 apk add --no-cache \
     autoconf \
     bash \

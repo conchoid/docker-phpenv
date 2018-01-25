@@ -1,6 +1,5 @@
 FROM alpine:3.6
 
-
 ENV CONCHOID_DOCKER_PHPENV_HOME /conchoid/docker-phpenv
 COPY . $CONCHOID_DOCKER_PHPENV_HOME
 RUN set -x \
@@ -56,14 +55,7 @@ RUN set -x \
 # install phpenv
 ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "$PHPENV_ROOT/shims:$PHPENV_ROOT/bin:$PATH"
-ENV PREINSTALLED_VERSIONS "\
-5.3.29\n\
-5.4.45\n\
-5.5.38\n\
-5.6.32\n\
-7.0.27\n\
-7.1.13\n\
-7.2.1"
+
 RUN set -x \
     && PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
     && PHP_BUILD_VERSION=8b5f7afa828709c115c49c0f864dad598cb4fc1f \
@@ -71,7 +63,4 @@ RUN set -x \
     && (cd $PHPENV_ROOT && git checkout $PHPENV_VERSION) \
     && git clone https://github.com/php-build/php-build $PHPENV_ROOT/plugins/php-build \
     && phpenv rehash \
-    && rm -r $PHPENV_ROOT/.git $PHPENV_ROOT/plugins/php-build/.git \
-    && echo -e "$PREINSTALLED_VERSIONS" | while read version;do \
-        phpenv install $version; done \
-    && rm -rf "/tmp/php-build*"
+    && rm -r $PHPENV_ROOT/.git $PHPENV_ROOT/plugins/php-build/.git
