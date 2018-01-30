@@ -45,11 +45,6 @@ apk add --no-cache \
     tidyhtml-libs="5.2.0-r1" \
     xz="5.2.3-r0"
 
-curl -o lemon.c http://www.sqlite.org/src/raw/tool/lemon.c?name=7f7735326ca9c3b48327b241063cee52d35d44e20ebe1b3624a81658052a4d39
-gcc -o lemon lemon.c
-mv lemon /usr/local/bin/
-rm lemon.c
-
 # buffio.h is deprecated but needed for building php prior to 7.2.
 curl -o /usr/include/buffio.h https://raw.githubusercontent.com/htacg/tidy-html5/5.6.0/include/buffio.h
 
