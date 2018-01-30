@@ -3,7 +3,6 @@
 set -eux
 
 apk add --no-cache \
-    apache2="2.4.27-r1" \
     apache2-dev="2.4.27-r1" \
     autoconf="2.69-r0" \
     bash="4.3.48-r1" \
@@ -24,6 +23,7 @@ apk add --no-cache \
     libedit-dev="20170329.3.1-r2" \
     libevent-dev="2.1.8-r1" \
     libjpeg-turbo-dev="1.5.1-r0" \
+    libltdl="2.4.6-r1" \
     libmcrypt-dev="2.5.8-r7" \
     libpng-dev="1.6.29-r1" \
     libxml2-dev="2.9.5-r0" \
