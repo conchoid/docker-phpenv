@@ -2,7 +2,6 @@
 
 set -eux
 
-# TODO: Fix package version
 apk add --no-cache \
     apache2="2.4.27-r1" \
     apache2-dev="2.4.27-r1" \
