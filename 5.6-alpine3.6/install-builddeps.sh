@@ -4,46 +4,46 @@ set -eux
 
 # TODO: Fix package version
 apk add --no-cache \
-    apache2-dev \
-    autoconf \
-    bash \
-    bzip2-dev \
-    ca-certificates \
-    coreutils \
-    curl \
-    curl-dev \
-    dpkg \
-    dpkg-dev \
-    file \
-    g++ \
-    gcc \
-    git \
-    gnupg \
-    icu-dev \
-    libc-dev \
-    libedit-dev \
-    libevent-dev \
-    libjpeg-turbo-dev \
-    libmcrypt-dev \
-    libpng-dev \
-    libxml2-dev \
-    libxslt-dev \
-    m4 \
-    make \
-    mercurial \
-    openssl \
-    openssh \
-    patch \
-    php5-dev \
-    pkgconf \
-    re2c \
-    readline-dev \
-    sqlite-dev \
-    subversion \
-    tar \
-    tidyhtml-dev \
-    tidyhtml-libs \
-    xz
+    apache2="2.4.27-r1" \
+    autoconf="2.69-r0" \
+    bash="4.3.48-r1" \
+    bzip2-dev="1.0.6-r5" \
+    ca-certificates="20161130-r2" \
+    coreutils="8.27-r0" \
+    curl="7.57.0-r0" \
+    curl-dev="7.57.0-r0" \
+    dpkg="1.18.23-r2" \
+    dpkg-dev="1.18.23-r2" \
+    file="5.32-r0" \
+    g++="6.3.0-r4" \
+    gcc="6.3.0-r4" \
+    git="2.13.5-r0" \
+    gnupg="2.1.20-r0" \
+    icu-dev="58.2-r2" \
+    libc-dev="0.7.1-r0" \
+    libedit-dev="20170329.3.1-r2" \
+    libevent-dev="2.1.8-r1" \
+    libjpeg-turbo-dev="1.5.1-r0" \
+    libmcrypt-dev="2.5.8-r7" \
+    libpng-dev="1.6.29-r1" \
+    libxml2-dev="2.9.5-r0" \
+    libxslt-dev="1.1.29-r3" \
+    m4="1.4.18-r0" \
+    make="4.2.1-r0" \
+    mercurial="4.3.1-r0" \
+    openssl="1.0.2n-r0" \
+    openssh="7.5_p1-r2" \
+    patch="2.7.5-r1" \
+    php5-dev="5.6.32-r0" \
+    pkgconf="1.3.7-r0" \
+    re2c="0.16-r0" \
+    readline-dev="6.3.008-r5" \
+    sqlite-dev="3.20.1-r0" \
+    subversion="1.9.7-r0" \
+    tar="1.29-r1" \
+    tidyhtml-dev="5.2.0-r1" \
+    tidyhtml-libs="5.2.0-r1" \
+    xz="5.2.3-r0"
 
 curl -o lemon.c http://www.sqlite.org/src/raw/tool/lemon.c?name=7f7735326ca9c3b48327b241063cee52d35d44e20ebe1b3624a81658052a4d39
 gcc -o lemon lemon.c
