@@ -5,6 +5,7 @@ set -eux
 # TODO: Fix package version
 apk add --no-cache \
     apache2="2.4.27-r1" \
+    apache2-dev="2.4.27-r1" \
     autoconf="2.69-r0" \
     bash="4.3.48-r1" \
     bzip2-dev="1.0.6-r5" \
