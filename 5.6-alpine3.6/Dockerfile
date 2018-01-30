@@ -55,6 +55,7 @@ RUN set -x \
 # install phpenv
 ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "$PHPENV_ROOT/shims:$PHPENV_ROOT/bin:$PATH"
+ENV CONFIGURE_OPTS "--disable-fpm --disable-cgi"
 
 RUN set -x \
     && PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
