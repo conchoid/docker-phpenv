@@ -31,7 +31,6 @@ ENV LD_PRELOAD /usr/bin/lib/preloadable_libiconv.so
 #
 # NOTE: Do not set COMPOSER_ALLOW_SUPERUSER=1 as Composer should be used
 # only by non-root users in plugins.
-
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_HOME /composer
 ENV COMPOSER_VERSION 1.4.2
@@ -52,10 +51,11 @@ RUN set -x \
     && rm /tmp/installer.php \
     && composer --ansi --version --no-interaction
 
-# install phpenv
+# Install phpenv
 ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "$PHPENV_ROOT/shims:$PHPENV_ROOT/bin:$PATH"
 ENV CONFIGURE_OPTS "--disable-fpm --disable-cgi"
+ENV CFLAGS "-lssl -lcrypto"
 
 RUN set -x \
     && PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
