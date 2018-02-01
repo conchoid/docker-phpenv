@@ -54,8 +54,8 @@ RUN set -x \
 # Install phpenv
 ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "$PHPENV_ROOT/shims:$PHPENV_ROOT/bin:$PATH"
-ENV CONFIGURE_OPTS "--disable-fpm --disable-cgi"
-ENV CFLAGS "-lssl -lcrypto"
+ENV PHP_CONFIGURE_OPTS "--disable-fpm --disable-cgi"
+ENV PHP_CFLAGS "-lssl -lcrypto"
 
 RUN set -x \
     && PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
