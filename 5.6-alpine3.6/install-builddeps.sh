@@ -3,7 +3,6 @@
 set -eux
 
 apk add --no-cache \
-    apache2-dev="2.4.27-r1" \
     autoconf="2.69-r0" \
     bash="4.3.48-r1" \
     bzip2-dev="1.0.6-r5" \
@@ -32,6 +31,7 @@ apk add --no-cache \
     make="4.2.1-r0" \
     mercurial="4.3.1-r0" \
     openssl="1.0.2n-r0" \
+    openssl-dev \
     openssh="7.5_p1-r2" \
     patch="2.7.5-r1" \
     php5-dev="5.6.32-r0" \
