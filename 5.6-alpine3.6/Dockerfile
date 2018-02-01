@@ -64,4 +64,8 @@ RUN set -x \
     && (cd $PHPENV_ROOT && git checkout $PHPENV_VERSION) \
     && git clone https://github.com/php-build/php-build $PHPENV_ROOT/plugins/php-build \
     && phpenv rehash \
-    && rm -r $PHPENV_ROOT/.git $PHPENV_ROOT/plugins/php-build/.git
+    && rm -r $PHPENV_ROOT/.git $PHPENV_ROOT/plugins/php-build/.git \
+    # Because the our phpenv container doesn't install apache2-dev package (to avoid conflict between openssl and libressl), put the
+    # dummy "apxs" module and avoid the "phpenv global" command returning exit code 1. See below for where "apxs" in "phpenv global":
+    # https://github.com/madumlao/phpenv/blob/085261129f7231fcd3b34401ad4af84b21df62eb/libexec/phpenv-global#L45
+    && touch $PHPENV_ROOT/bin/apxs && chmod +x $PHPENV_ROOT/bin/apxs
