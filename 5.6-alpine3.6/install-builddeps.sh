@@ -31,7 +31,7 @@ apk add --no-cache \
     make="4.2.1-r0" \
     mercurial="4.3.1-r0" \
     openssl="1.0.2n-r0" \
-    openssl-dev \
+    openssl-dev="1.0.2n-r0" \
     openssh="7.5_p1-r2" \
     patch="2.7.5-r1" \
     php5-dev="5.6.32-r0" \
