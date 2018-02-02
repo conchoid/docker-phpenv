@@ -61,3 +61,6 @@ tar -zxf $WORK_DIR/downloads/bison-$BISON_VERSION.tar.gz -C $WORK_DIR/src
   ln -s /usr/local/lib/bison-$BISON_VERSION/bin/bison /usr/local/bin/bison
 )
 rm -rf $WORK_DIR
+
+ln -s -f "$(which php5)" "$(dirname $(which php5))/php"
+ln -s -f "$(which php-config5)" "$(dirname $(which php-config5))/php-config"
