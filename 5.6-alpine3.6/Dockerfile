@@ -14,9 +14,8 @@ RUN PHP_VERSION="5.6.32-r0" \
         php5-zlib="${PHP_VERSION}"
 
 ENV CONCHOID_DOCKER_PHPENV_HOME /conchoid/docker-phpenv
-COPY . $CONCHOID_DOCKER_PHPENV_HOME
-RUN set -x \
-    && $CONCHOID_DOCKER_PHPENV_HOME/install-builddeps.sh
+COPY . ${CONCHOID_DOCKER_PHPENV_HOME}
+RUN ${CONCHOID_DOCKER_PHPENV_HOME}/install-builddeps.sh
 
 RUN curl -SL http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz | tar -xz -C ~/ \
 	&& rm /usr/bin/iconv \
@@ -50,20 +49,20 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 
 # Install phpenv
 ENV PHPENV_ROOT /opt/phpenv
-ENV PATH "$PHPENV_ROOT/shims:$PHPENV_ROOT/bin:$PATH"
+ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV PHP_CONFIGURE_OPTS "--disable-fpm --disable-cgi"
 ENV PHP_CFLAGS "-lssl -lcrypto"
 
 RUN set -x \
     && PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
     && PHP_BUILD_VERSION=05c4c3667955ce8ab9f8e8bd5419a8154ec824d8 \
-    && git clone https://github.com/madumlao/phpenv.git $PHPENV_ROOT \
-    && (cd $PHPENV_ROOT && git checkout $PHPENV_VERSION) \
-    && git clone https://github.com/php-build/php-build $PHPENV_ROOT/plugins/php-build \
+    && git clone https://github.com/madumlao/phpenv.git ${PHPENV_ROOT} \
+    && (cd ${PHPENV_ROOT} && git checkout ${PHPENV_VERSION}) \
+    && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
     && (cd ${PHPENV_ROOT}/plugins/php-build && git checkout ${PHP_BUILD_VERSION}) \
     && phpenv rehash \
-    && rm -r $PHPENV_ROOT/.git $PHPENV_ROOT/plugins/php-build/.git \
+    && rm -r ${PHPENV_ROOT}/.git ${PHPENV_ROOT}/plugins/php-build/.git \
     # Because the our phpenv container doesn't install apache2-dev package (to avoid conflict between openssl and libressl), put the
     # dummy "apxs" module and avoid the "phpenv global" command returning exit code 1. See below for where "apxs" in "phpenv global":
     # https://github.com/madumlao/phpenv/blob/085261129f7231fcd3b34401ad4af84b21df62eb/libexec/phpenv-global#L45
-    && touch $PHPENV_ROOT/bin/apxs && chmod +x $PHPENV_ROOT/bin/apxs
+    && touch ${PHPENV_ROOT}/bin/apxs && chmod +x ${PHPENV_ROOT}/bin/apxs

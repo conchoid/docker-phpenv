@@ -51,16 +51,16 @@ curl -o /usr/include/buffio.h https://raw.githubusercontent.com/htacg/tidy-html5
 # bison 2.x is required for building php5.x
 WORK_DIR="/tmp/bison/"
 BISON_VERSION="2.6.4"
-mkdir -p $WORK_DIR/downloads $WORK_DIR/src
-wget http://ftp.gnu.org/gnu/bison/bison-$BISON_VERSION.tar.gz -P $WORK_DIR/downloads/
-tar -zxf $WORK_DIR/downloads/bison-$BISON_VERSION.tar.gz -C $WORK_DIR/src
+mkdir -p ${WORK_DIR}/downloads ${WORK_DIR}/src
+wget http://ftp.gnu.org/gnu/bison/bison-${BISON_VERSION}.tar.gz -P ${WORK_DIR}/downloads/
+tar -zxf ${WORK_DIR}/downloads/bison-${BISON_VERSION}.tar.gz -C ${WORK_DIR}/src
 (
-  cd $WORK_DIR/src/bison-$BISON_VERSION/
-  ./configure --prefix=/usr/local/lib/bison-$BISON_VERSION
+  cd ${WORK_DIR}/src/bison-${BISON_VERSION}/
+  ./configure --prefix=/usr/local/lib/bison-${BISON_VERSION}
   make && make install
-  ln -s /usr/local/lib/bison-$BISON_VERSION/bin/bison /usr/local/bin/bison
+  ln -s /usr/local/lib/bison-${BISON_VERSION}/bin/bison /usr/local/bin/bison
 )
-rm -rf $WORK_DIR
+rm -rf ${WORK_DIR}
 
 ln -s -f "$(which php5)" "$(dirname $(which php5))/php"
 ln -s -f "$(which php-config5)" "$(dirname $(which php-config5))/php-config"
