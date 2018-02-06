@@ -50,7 +50,6 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 # Install phpenv
 ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
-ENV PHP_CONFIGURE_OPTS "--disable-fpm --disable-cgi"
 ENV PHP_CFLAGS "-lssl -lcrypto"
 
 RUN set -x \
