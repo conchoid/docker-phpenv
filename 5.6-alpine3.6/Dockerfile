@@ -56,10 +56,11 @@ ENV PHP_CFLAGS "-lssl -lcrypto"
 
 RUN set -x \
     && PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
-    && PHP_BUILD_VERSION=8b5f7afa828709c115c49c0f864dad598cb4fc1f \
+    && PHP_BUILD_VERSION=05c4c3667955ce8ab9f8e8bd5419a8154ec824d8 \
     && git clone https://github.com/madumlao/phpenv.git $PHPENV_ROOT \
     && (cd $PHPENV_ROOT && git checkout $PHPENV_VERSION) \
     && git clone https://github.com/php-build/php-build $PHPENV_ROOT/plugins/php-build \
+    && (cd ${PHPENV_ROOT}/plugins/php-build && git checkout ${PHP_BUILD_VERSION}) \
     && phpenv rehash \
     && rm -r $PHPENV_ROOT/.git $PHPENV_ROOT/plugins/php-build/.git \
     # Because the our phpenv container doesn't install apache2-dev package (to avoid conflict between openssl and libressl), put the
