@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-RUN PHP_VERSION="5.6.32-r0" \
+RUN PHP_VERSION="5.6.33-r0" \
     && apk add --no-cache \
         php5="${PHP_VERSION}" \
         php5-bz2="${PHP_VERSION}" \

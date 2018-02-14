@@ -8,8 +8,8 @@ apk add --no-cache \
     bzip2-dev="1.0.6-r5" \
     ca-certificates="20161130-r2" \
     coreutils="8.27-r0" \
-    curl="7.57.0-r0" \
-    curl-dev="7.57.0-r0" \
+    curl="7.58.0-r0" \
+    curl-dev="7.58.0-r0" \
     dpkg="1.18.23-r2" \
     dpkg-dev="1.18.23-r2" \
     file="5.32-r0" \
@@ -34,7 +34,7 @@ apk add --no-cache \
     openssl-dev="1.0.2n-r0" \
     openssh="7.5_p1-r2" \
     patch="2.7.5-r1" \
-    php5-dev="5.6.32-r0" \
+    php5-dev="5.6.33-r0" \
     pkgconf="1.3.7-r0" \
     re2c="0.16-r0" \
     readline-dev="6.3.008-r5" \
