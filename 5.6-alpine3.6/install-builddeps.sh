@@ -38,7 +38,7 @@ apk add --no-cache \
     pkgconf="1.3.7-r0" \
     re2c="0.16-r0" \
     readline-dev="6.3.008-r5" \
-    sqlite-dev="3.20.1-r0" \
+    sqlite-dev="3.20.1-r1" \
     subversion="1.9.7-r0" \
     tar="1.29-r1" \
     tidyhtml-dev="5.2.0-r1" \
