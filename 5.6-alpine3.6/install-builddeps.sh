@@ -33,7 +33,7 @@ apk add --no-cache \
     openssl="1.0.2n-r0" \
     openssl-dev="1.0.2n-r0" \
     openssh="7.5_p1-r2" \
-    patch="2.7.5-r1" \
+    patch="2.7.5-r3" \
     php5-dev="5.6.33-r0" \
     pkgconf="1.3.7-r0" \
     re2c="0.16-r0" \
