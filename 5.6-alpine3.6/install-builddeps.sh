@@ -9,7 +9,7 @@ apk add --no-cache \
     ca-certificates="20161130-r2" \
     coreutils="8.27-r0" \
     curl="7.58.0-r1" \
-    curl-dev="7.58.0-r1" \
+    curl-dev="7.59.0-r0" \
     dpkg="1.18.23-r2" \
     dpkg-dev="1.18.23-r2" \
     file="5.32-r0" \
