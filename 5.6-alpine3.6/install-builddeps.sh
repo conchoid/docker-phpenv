@@ -2,6 +2,8 @@
 
 set -eux
 
+mkdir -p /var/cache/apk && ln -s /var/cache/apk /etc/apk/cache
+
 apk add --no-cache \
     autoconf="2.69-r0" \
     bash="4.3.48-r1" \
@@ -44,6 +46,8 @@ apk add --no-cache \
     tidyhtml-dev="5.2.0-r1" \
     tidyhtml-libs="5.2.0-r1" \
     xz="5.2.3-r0"
+
+rm /etc/apk/cache
 
 # buffio.h is deprecated but needed for building php prior to 7.2.
 curl -o /usr/include/buffio.h https://raw.githubusercontent.com/htacg/tidy-html5/5.6.0/include/buffio.h
