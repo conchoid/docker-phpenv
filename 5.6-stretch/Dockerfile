@@ -62,7 +62,7 @@ ENV PHP_CFLAGS "-lssl -lcrypto"
 
 RUN set -x \
     && PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
-    && PHP_BUILD_VERSION=41948c122834ff51d13f240a2d53ec3e032fab98 \
+    && PHP_BUILD_VERSION=8315096df7e520806e35fd8ecb53405fdf745c4b \
     && git clone https://github.com/madumlao/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
