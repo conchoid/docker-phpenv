@@ -1,22 +1,33 @@
 FROM debian:stretch
 
-RUN PHP_VERSION="5.6.37-1+0~20180725093819.2+stretch~1.gbp606419" \
-    && apt-get update \
+# Preset locale to en_US.UTF-8
+# https://docs.docker.com/samples/library/debian/#locales
+RUN apt-get update && apt-get install -y locales && apt-get clean && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+# Installing PHP 5.6
+RUN apt-get update \
     && apt-get install -y \
         apt-transport-https="1.4.8" \
         ca-certificates="20161130+nmu1+deb9u1" \
+        libcurl3="7.52.1-5+deb9u6" \
         curl="7.52.1-5+deb9u6" \
         gnupg="2.1.18-8~deb9u2" \
     && curl -s https://packages.sury.org/php/apt.gpg | apt-key add - \
     && echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list \
+    && echo "deb http://ftp.br.debian.org/debian/ jessie main" > /etc/apt/sources.list.d/jessie.list \
     && apt-get update \
     && apt-get install -y \
-        php5.6="${PHP_VERSION}" \
-        php5.6-bz2="${PHP_VERSION}" \
-        php5.6-xml="${PHP_VERSION}" \
+        php5.6 \
+        php5.6-bz2 \
+        php5.6-xml \
     && apt-get remove -y \
         apt-transport-https="1.4.8" \
         ca-certificates="20161130+nmu1+deb9u1" \
+        libcurl3="7.52.1-5+deb9u6" \
         curl="7.52.1-5+deb9u6" \
         gnupg="2.1.18-8~deb9u2" \
     && apt-get clean
