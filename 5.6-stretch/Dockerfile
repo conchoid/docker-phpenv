@@ -19,10 +19,10 @@ RUN PHP_VERSION="5.6.38-2+0~20181015120829.6+stretch~1.gbp567807" \
     && sh -c 'echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list'\
     && apt-get update \
     && apt-get install -y \
-        php5.6="$PHP_VERSION" \
-        php5.6-bz2="$PHP_VERSION" \
-        php5.6-xml="$PHP_VERSION" \
-        php5.6-dev="$PHP_VERSION" \
+        php5.6="${PHP_VERSION}" \
+        php5.6-bz2="${PHP_VERSION}" \
+        php5.6-xml="${PHP_VERSION}" \
+        php5.6-dev="${PHP_VERSION}" \
    && rm -f /etc/apt/sources.list.d/php.list \
    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -66,7 +66,7 @@ ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV PHP_CFLAGS "-lssl -lcrypto"
 
 RUN PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
-    && PHP_BUILD_VERSION=8315096df7e520806e35fd8ecb53405fdf745c4b \
+    && PHP_BUILD_VERSION=3c39466bdb0c4e5054e775aacae7d53af89e78eb \
     && git clone https://github.com/madumlao/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
