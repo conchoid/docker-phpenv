@@ -8,29 +8,23 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+RUN apt-get update && apt-get install -y \
+       wget curl git subversion apt-transport-https ca-certificates \
+   && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Installing PHP 5.6
-RUN apt-get update \
-    && apt-get install -y \
-        apt-transport-https="1.4.8" \
-        ca-certificates="20161130+nmu1+deb9u1" \
-        libcurl3="7.52.1-5+deb9u6" \
-        curl="7.52.1-5+deb9u6" \
-        gnupg="2.1.18-8~deb9u2" \
-    && curl -s https://packages.sury.org/php/apt.gpg | apt-key add - \
-    && echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list \
-    && echo "deb http://ftp.br.debian.org/debian/ jessie main" > /etc/apt/sources.list.d/jessie.list \
+# https://packages.sury.org/php/README.txt
+RUN PHP_VERSION="5.6.38-2+0~20181015120829.6+stretch~1.gbp567807" \
+    && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
+    && sh -c 'echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list'\
     && apt-get update \
     && apt-get install -y \
-        php5.6 \
-        php5.6-bz2 \
-        php5.6-xml \
-    && apt-get remove -y \
-        apt-transport-https="1.4.8" \
-        ca-certificates="20161130+nmu1+deb9u1" \
-        libcurl3="7.52.1-5+deb9u6" \
-        curl="7.52.1-5+deb9u6" \
-        gnupg="2.1.18-8~deb9u2" \
-    && apt-get clean
+        php5.6="$PHP_VERSION" \
+        php5.6-bz2="$PHP_VERSION" \
+        php5.6-xml="$PHP_VERSION" \
+        php5.6-dev="$PHP_VERSION" \
+   && rm -f /etc/apt/sources.list.d/php.list \
+   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV CONCHOID_DOCKER_PHPENV_HOME /conchoid/docker-phpenv
 COPY . ${CONCHOID_DOCKER_PHPENV_HOME}
@@ -71,8 +65,7 @@ ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV PHP_CFLAGS "-lssl -lcrypto"
 
-RUN set -x \
-    && PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
+RUN PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
     && PHP_BUILD_VERSION=8315096df7e520806e35fd8ecb53405fdf745c4b \
     && git clone https://github.com/madumlao/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${PHPENV_VERSION}) \
