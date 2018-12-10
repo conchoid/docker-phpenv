@@ -3,7 +3,7 @@
 set -eux
 
 apt-get update && apt-get -y install  \
-  autoconf \
+  autoconf2.59 \
   coreutils \
   dpkg \
   dpkg-dev \
@@ -23,6 +23,7 @@ apt-get update && apt-get -y install  \
   libtidy-dev \
   libxml2-dev \
   libxslt1-dev \
+  libzip-dev \
   m4 \
   make \
   mercurial \
@@ -34,7 +35,6 @@ apt-get update && apt-get -y install  \
   sqlite3 \
   tar \
   tidy 
-
 
 # openssl1.0.x and related libssl packages are required for installing php5.x by phpenv.
 echo "deb http://ftp.br.debian.org/debian/ jessie main" > /etc/apt/sources.list.d/jessie.list 

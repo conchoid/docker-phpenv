@@ -12,17 +12,19 @@ RUN apt-get update && apt-get install -y \
        wget curl git subversion apt-transport-https ca-certificates \
    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Installing PHP 5.6
+# Installing PHP 5.6.38
 # https://packages.sury.org/php/README.txt
-RUN PHP_VERSION="5.6.38-2+0~20181015120829.6+stretch~1.gbp567807" \
+RUN PHP_VERSION="5.6.38" \
     && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
     && sh -c 'echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list'\
     && apt-get update \
+    && PHP_DPKG_VERSION=$(apt-cache show php5.6 | grep -e "Version: $PHP_VERSION" | cut -d" " -f2) \
+    && [ -n "$PHP_DPKG_VERSION" ] \
     && apt-get install -y \
-        php5.6="${PHP_VERSION}" \
-        php5.6-bz2="${PHP_VERSION}" \
-        php5.6-xml="${PHP_VERSION}" \
-        php5.6-dev="${PHP_VERSION}" \
+        php5.6="${PHP_DPKG_VERSION}" \
+        php5.6-bz2="${PHP_DPKG_VERSION}" \
+        php5.6-xml="${PHP_DPKG_VERSION}" \
+        php5.6-dev="${PHP_DPKG_VERSION}" \
    && rm -f /etc/apt/sources.list.d/php.list \
    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -39,23 +41,16 @@ RUN curl -SL http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz | tar -xz 
 ENV LD_PRELOAD /usr/bin/lib/preloadable_libiconv.so
 
 # Installing Composer.
-# Refer to https://github.com/composer/docker/blob/master/1.4/Dockerfile
-#
+# Refer to https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
 # NOTE: Do not set COMPOSER_ALLOW_SUPERUSER=1 as Composer should be used
 # only by non-root users in plugins.
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_HOME /composer
-ENV COMPOSER_VERSION 1.4.2
-
-RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/composer/getcomposer.org/da290238de6d63faace0343efbdd5aa9354332c5/web/installer \
-    && php -r " \
-        \$signature = '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410'; \
-        \$hash = hash('SHA384', file_get_contents('/tmp/installer.php')); \
-        if (!hash_equals(\$signature, \$hash)) { \
-            unlink('/tmp/installer.php'); \
-            echo 'Integrity check failed, installer is either corrupt or worse.' . PHP_EOL; \
-            exit(1); \
-        }" \
+ENV COMPOSER_VERSION 1.8.0
+RUN EXPECTED_SIGNATURE="$(curl -q https://composer.github.io/installer.sig)" \
+    && curl -sfLo /tmp/installer.php https://getcomposer.org/installer \
+    && ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', '/tmp/installer.php');")" \
+    && if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then echo 'ERROR: Invalid installer signature' && rm /tmp/installer.php && exit 1; fi \
     && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION} \
     && rm /tmp/installer.php \
     && composer --ansi --version --no-interaction
@@ -64,10 +59,9 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV PHP_CFLAGS "-lssl -lcrypto"
-
-RUN PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
-    && PHP_BUILD_VERSION=3c39466bdb0c4e5054e775aacae7d53af89e78eb \
-    && git clone https://github.com/madumlao/phpenv.git ${PHPENV_ROOT} \
+RUN PHPENV_VERSION=8e2f7b5664f7a772fda0b84ce17ee477a92dfb12 \
+    && PHP_BUILD_VERSION=62dc4932ca83f9143ba73ce6fc6c69a929384482 \
+    && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
     && (cd ${PHPENV_ROOT}/plugins/php-build && git checkout ${PHP_BUILD_VERSION}) \
@@ -80,4 +74,3 @@ RUN PHPENV_VERSION=085261129f7231fcd3b34401ad4af84b21df62eb \
     && cp ${CONCHOID_DOCKER_PHPENV_HOME}/patches/xp_ssl.c.2.patch ${PHPENV_ROOT}/plugins/php-build/share/php-build/patches/ \
     && sed -ie '0,/configure_option/a patch_file\ "xp_ssl.c.2.patch"' ${PHPENV_ROOT}/plugins/php-build/share/php-build/definitions/5.3.29 \
     && sed -ie '0,/configure_option/a patch_file\ "xp_ssl.c.2.patch"' ${PHPENV_ROOT}/plugins/php-build/share/php-build/definitions/5.4.45
-
