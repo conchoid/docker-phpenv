@@ -12,9 +12,9 @@ RUN apt-get update && apt-get install -y \
        wget curl git subversion apt-transport-https ca-certificates \
    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Installing PHP 5.6.38
-# https://packages.sury.org/php/README.txt
-RUN PHP_VERSION="5.6.38" \
+# Installing PHP 5.6.39
+# https://packages.sury.xyz/php/README.txt
+RUN PHP_VERSION="5.6.39" \
     && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
     && sh -c 'echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list'\
     && apt-get update \
