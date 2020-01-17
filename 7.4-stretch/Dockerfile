@@ -12,19 +12,19 @@ RUN apt-get update && apt-get install -y \
        wget curl git subversion apt-transport-https ca-certificates \
    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Installing PHP 5.6.39
+# Installing PHP 7.4
 # https://packages.sury.xyz/php/README.txt
-RUN PHP_VERSION="5.6.39" \
+RUN DPKG_NAME="php7.4" \
     && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
     && sh -c 'echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list'\
     && apt-get update \
-    && PHP_DPKG_VERSION=$(apt-cache show php5.6 | grep -e "Version: $PHP_VERSION" | cut -d" " -f2) \
+    && PHP_DPKG_VERSION=$(apt-cache show "${DPKG_NAME}" | grep -e "^Version: " | cut -d" " -f2) \
     && [ -n "$PHP_DPKG_VERSION" ] \
     && apt-get install -y \
-        php5.6="${PHP_DPKG_VERSION}" \
-        php5.6-bz2="${PHP_DPKG_VERSION}" \
-        php5.6-xml="${PHP_DPKG_VERSION}" \
-        php5.6-dev="${PHP_DPKG_VERSION}" \
+        "${DPKG_NAME}=${PHP_DPKG_VERSION}" \
+        "${DPKG_NAME}-bz2=${PHP_DPKG_VERSION}" \
+        "${DPKG_NAME}-xml=${PHP_DPKG_VERSION}" \
+        "${DPKG_NAME}-dev=${PHP_DPKG_VERSION}" \
    && rm -f /etc/apt/sources.list.d/php.list \
    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -46,7 +46,7 @@ ENV LD_PRELOAD /usr/bin/lib/preloadable_libiconv.so
 # only by non-root users in plugins.
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_HOME /composer
-ENV COMPOSER_VERSION 1.8.0
+ENV COMPOSER_VERSION 1.9.2
 RUN EXPECTED_SIGNATURE="$(curl -q https://composer.github.io/installer.sig)" \
     && curl -sfLo /tmp/installer.php https://getcomposer.org/installer \
     && ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', '/tmp/installer.php');")" \
@@ -59,8 +59,8 @@ RUN EXPECTED_SIGNATURE="$(curl -q https://composer.github.io/installer.sig)" \
 ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV PHP_CFLAGS "-lssl -lcrypto"
-RUN PHPENV_VERSION=8e2f7b5664f7a772fda0b84ce17ee477a92dfb12 \
-    && PHP_BUILD_VERSION=62dc4932ca83f9143ba73ce6fc6c69a929384482 \
+RUN PHPENV_VERSION=9b7e4e1c0083c46be69f4c6d063f78c18654aad1 \
+    && PHP_BUILD_VERSION=ac87580c0c5b2b48fb963ffb670c1d1e0a4718e4 \
     && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
