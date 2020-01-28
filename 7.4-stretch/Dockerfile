@@ -60,7 +60,7 @@ ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV PHP_CFLAGS "-lssl -lcrypto"
 RUN PHPENV_VERSION=9b7e4e1c0083c46be69f4c6d063f78c18654aad1 \
-    && PHP_BUILD_VERSION=ac87580c0c5b2b48fb963ffb670c1d1e0a4718e4 \
+    && PHP_BUILD_VERSION=0f89e4a6d7f3415eff5d3112069cfc84c204e142 \
     && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
