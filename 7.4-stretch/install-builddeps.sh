@@ -2,8 +2,8 @@
 
 set -eux
 
-apt-get update && apt-get -y install  \
-  autoconf2.59 \
+apt-get update && apt-get -y --allow-downgrades install  \
+  autoconf \
   coreutils \
   dpkg \
   dpkg-dev \
@@ -21,7 +21,8 @@ apt-get update && apt-get -y install  \
   libmcrypt-dev \
   libpng-dev \
   libtidy-dev \
-  libxml2-dev \
+  libxml2="2.9.4+dfsg1-2.2+deb9u2" \
+  libxml2-dev="2.9.4+dfsg1-2.2+deb9u2" \
   libxslt1-dev \
   libzip-dev \
   m4 \
@@ -40,7 +41,7 @@ apt-get update && apt-get -y install  \
 echo "deb http://ftp.br.debian.org/debian/ jessie main" > /etc/apt/sources.list.d/jessie.list 
 apt-get update && apt-get -y install --allow-downgrades \
   openssl="1.0.1t-1+deb8u8" \
-  libssl1.0.2="1.0.2l-2+deb9u3" \
+  libssl1.0.2="1.0.2u-1~deb9u1" \
   libssl-dev="1.0.1t-1+deb8u8" 
 rm -f /etc/apt/sources.list.d/jessie.list 
 
