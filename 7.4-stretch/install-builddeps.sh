@@ -16,10 +16,13 @@ apt-get update && apt-get -y --allow-downgrades install  \
   libcurl4-gnutls-dev \
   libedit-dev \
   libevent-dev \
-  libghc-readline-dev \
   libjpeg62-turbo-dev \
+  libkrb5-dev \
   libmcrypt-dev \
+  libonig-dev \
   libpng-dev \
+  libreadline-dev \
+  libsqlite3-dev \
   libtidy-dev \
   libxml2="2.9.4+dfsg1-2.2+deb9u2" \
   libxml2-dev="2.9.4+dfsg1-2.2+deb9u2" \
