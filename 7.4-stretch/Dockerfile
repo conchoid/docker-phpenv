@@ -60,7 +60,7 @@ ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV PHP_CFLAGS "-lssl -lcrypto"
 RUN PHPENV_VERSION=9b7e4e1c0083c46be69f4c6d063f78c18654aad1 \
-    && PHP_BUILD_VERSION=0f89e4a6d7f3415eff5d3112069cfc84c204e142 \
+    && PHP_BUILD_VERSION=db17bdc86ce99aa41c693bd7b27b376981de2208 \
     && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
@@ -70,7 +70,5 @@ RUN PHPENV_VERSION=9b7e4e1c0083c46be69f4c6d063f78c18654aad1 \
     # Because the our phpenv container doesn't install apache2-dev package (to avoid conflict between openssl and libressl), put the
     # dummy "apxs" module and avoid the "phpenv global" command returning exit code 1. See below for where "apxs" in "phpenv global":
     # https://github.com/madumlao/phpenv/blob/085261129f7231fcd3b34401ad4af84b21df62eb/libexec/phpenv-global#L45
-    && touch ${PHPENV_ROOT}/bin/apxs && chmod +x ${PHPENV_ROOT}/bin/apxs \
-    && cp ${CONCHOID_DOCKER_PHPENV_HOME}/patches/xp_ssl.c.2.patch ${PHPENV_ROOT}/plugins/php-build/share/php-build/patches/ \
-    && sed -ie '0,/configure_option/a patch_file\ "xp_ssl.c.2.patch"' ${PHPENV_ROOT}/plugins/php-build/share/php-build/definitions/5.3.29 \
-    && sed -ie '0,/configure_option/a patch_file\ "xp_ssl.c.2.patch"' ${PHPENV_ROOT}/plugins/php-build/share/php-build/definitions/5.4.45
+    && touch ${PHPENV_ROOT}/bin/apxs && chmod +x ${PHPENV_ROOT}/bin/apxs
+
