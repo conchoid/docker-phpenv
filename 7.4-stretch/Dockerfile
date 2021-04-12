@@ -46,9 +46,9 @@ RUN curl -o /usr/include/buffio.h https://raw.githubusercontent.com/htacg/tidy-h
 # easy.h should be in <curl-dir>/include/curl/
 RUN ln -s /usr/include/x86_64-linux-gnu/curl /usr/include
 
-ENV CONCHOID_DOCKER_PHPENV_HOME /conchoid/docker-phpenv
-COPY . ${CONCHOID_DOCKER_PHPENV_HOME}
-RUN ${CONCHOID_DOCKER_PHPENV_HOME}/install-builddeps.sh
+ENV ROCRO_CONCHOID_DOCKER_PHPENV_HOME /conchoid/docker-phpenv
+COPY . ${ROCRO_CONCHOID_DOCKER_PHPENV_HOME}
+RUN ${ROCRO_CONCHOID_DOCKER_PHPENV_HOME}/install-builddeps.sh
 
 # Installing PHP 7.4
 # https://packages.sury.xyz/php/README.txt
@@ -72,23 +72,23 @@ RUN DPKG_NAME="php7.4" \
 # only by non-root users in plugins.
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_HOME /composer
-ENV COMPOSER_VERSION 1.9.2
+ENV ROCRO_COMPOSER_VERSION 1.9.2
 RUN EXPECTED_SIGNATURE="$(curl -q https://composer.github.io/installer.sig)" \
     && curl -sfLo /tmp/installer.php https://getcomposer.org/installer \
     && ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', '/tmp/installer.php');")" \
     && if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then echo 'ERROR: Invalid installer signature' && rm /tmp/installer.php && exit 1; fi \
-    && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION} \
+    && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${ROCRO_COMPOSER_VERSION} \
     && rm /tmp/installer.php \
     && composer --ansi --version --no-interaction
 
 # Install phpenv
 ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
-ENV PHP_CFLAGS "-lssl -lcrypto"
-RUN PHPENV_VERSION=9b7e4e1c0083c46be69f4c6d063f78c18654aad1 \
+ENV ROCRO_PHP_CFLAGS "-lssl -lcrypto"
+RUN ROCRO_PHPENV_VERSION=9b7e4e1c0083c46be69f4c6d063f78c18654aad1 \
     && PHP_BUILD_VERSION=db17bdc86ce99aa41c693bd7b27b376981de2208 \
     && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
-    && (cd ${PHPENV_ROOT} && git checkout ${PHPENV_VERSION}) \
+    && (cd ${PHPENV_ROOT} && git checkout ${ROCRO_PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
     && (cd ${PHPENV_ROOT}/plugins/php-build && git checkout ${PHP_BUILD_VERSION}) \
     && phpenv rehash \
@@ -98,7 +98,7 @@ RUN PHPENV_VERSION=9b7e4e1c0083c46be69f4c6d063f78c18654aad1 \
     # https://github.com/madumlao/phpenv/blob/085261129f7231fcd3b34401ad4af84b21df62eb/libexec/phpenv-global#L45
     && touch ${PHPENV_ROOT}/bin/apxs && chmod +x ${PHPENV_ROOT}/bin/apxs
 
-ENV PHP_CONFIGURE_OPTS "--disable-fpm --disable-cgi"
+ENV ROCRO_PHP_CONFIGURE_OPTS "--disable-fpm --disable-cgi"
 ENV PHP_AUTOCONF /usr/bin/autoconf
 
 # Install all latest versions excludes older than one year since EOL.
@@ -117,8 +117,8 @@ RUN phpenv global system \
     && cp "$(phpenv which php-config)" "${version_bin_dir}" \
     && cp "$(phpenv which phar)" "${version_bin_dir}" \
     && cp "$(phpenv which phar.phar)" "${version_bin_dir}" \
-    && export CONFIGURE_OPTS="${PHP_CONFIGURE_OPTS}" \
-    && export CFLAGS="${PHP_CFLAGS}" \
+    && export CONFIGURE_OPTS="${ROCRO_PHP_CONFIGURE_OPTS}" \
+    && export CFLAGS="${ROCRO_PHP_CFLAGS}" \
     && echo "${PREINSTALLED_VERSIONS}" | while read version;do \
         if [ ! -e "${PHPENV_ROOT}/versions/${version}" ];then \
             phpenv install $version \
