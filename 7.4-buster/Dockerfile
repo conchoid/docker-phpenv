@@ -60,7 +60,7 @@ ENV PHPENV_ROOT /opt/phpenv
 ENV PATH "${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV ROCRO_PHP_CFLAGS "-lssl -lcrypto"
 RUN ROCRO_PHPENV_VERSION=9b7e4e1c0083c46be69f4c6d063f78c18654aad1 \
-    && PHP_BUILD_VERSION=17495066aa12cd9f74ef7acfe41191386741c9aa \
+    && PHP_BUILD_VERSION=558a68de68cdb8e0f763dd0c4c4b38a01ff96ce2 \
     && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${ROCRO_PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
@@ -80,8 +80,8 @@ ENV PHP_AUTOCONF /usr/bin/autoconf
 ENV PREINSTALLED_VERSIONS "\
 7.1.33\n\
 7.2.34\n\
-7.3.27\n\
-7.4.16"
+7.3.28\n\
+7.4.18"
 
 RUN phpenv global system \
     && system_php_ver=$(php -v | head -1 | sed -e "s/^PHP \([0-9.]*\).*$/\1/") \
