@@ -14,10 +14,10 @@ apt-get update && apt-get -y --allow-downgrades install  \
   gnupg \
   icu-devtools="57.1-6+deb9u4" \
   libicu-dev="57.1-6+deb9u4" \
-  libssl1.1="1.1.1d-0+deb10u4" \
+  libssl1.1="1.1.1d-0+deb10u6" \
   libxml2="2.9.4+dfsg1-7+deb10u1" \
   libxml2-dev="2.9.4+dfsg1-7+deb10u1" \
-  libssl-dev="1.1.1d-0+deb10u4" \
+  libssl-dev="1.1.1d-0+deb10u6" \
   libzip4="1.1.2-1.1+b1" \
   libzip-dev="1.1.2-1.1+b1" \
   sqlite3 \
