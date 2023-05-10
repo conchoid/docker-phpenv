@@ -9,7 +9,9 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 RUN apt-get update && apt-get install -y \
-       wget curl git git-lfs subversion apt-transport-https lsb-release ca-certificates \
+       wget curl git git-lfs subversion \
+       libxml2-dev libsqlite3-dev zlib1g-dev libbz2-dev libcurl4-openssl-dev libpng-dev libjpeg-dev libonig-dev libreadline-dev libtidy-dev libxslt-dev libzip-dev \
+       apt-transport-https lsb-release ca-certificates \
    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Installing PHP 8.0
@@ -27,10 +29,6 @@ RUN DPKG_NAME="php8.0" \
         "${DPKG_NAME}-dev=${PHP_DPKG_VERSION}" \
    && rm -f /etc/apt/sources.list.d/php.list \
    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-ENV ROCRO_CONCHOID_DOCKER_PHPENV_HOME /conchoid/docker-phpenv
-COPY . ${ROCRO_CONCHOID_DOCKER_PHPENV_HOME}
-RUN ${ROCRO_CONCHOID_DOCKER_PHPENV_HOME}/install-builddeps.sh
 
 RUN curl -SL http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz | tar -xz -C ~/ \
 	&& rm /usr/bin/iconv \
@@ -78,7 +76,6 @@ ENV PHP_AUTOCONF /usr/bin/autoconf
 # Install all latest versions excludes older than one year since EOL.
 # https://www.php.net/supported-versions.php
 ENV PREINSTALLED_VERSIONS "\
-7.3.33\n\
 7.4.33\n\
 8.0.28\n\
 8.1.16\n\
