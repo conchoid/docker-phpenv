@@ -80,3 +80,18 @@ RUN phpenv global system \
         ; fi \
     ; done \
     && phpenv global system
+
+WORKDIR /usr/local/src
+RUN wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2u.tar.gz \
+    && tar -xzf openssl-1.0.2u.tar.gz \
+    && rm openssl-1.0.2u.tar.gz
+
+WORKDIR /usr/local/src/openssl-1.0.2u
+RUN ./config --prefix=/opt/openssl-1.0.2 --openssldir=/opt/openssl-1.0.2 \
+    && make -j$(nproc) \
+    && make install
+
+ENV PATH="/opt/openssl-1.0.2/bin:${PATH}"
+ENV OPENSSL_CONF="/opt/openssl-1.0.2/openssl.cnf"
+
+WORKDIR /
