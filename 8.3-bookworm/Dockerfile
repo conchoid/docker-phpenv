@@ -24,7 +24,7 @@ RUN docker-php-ext-install bz2 xml
 # only by non-root users in plugins.
 ENV PATH="/composer/vendor/bin:$PATH"
 ENV COMPOSER_HOME=/composer
-ENV ROCRO_COMPOSER_VERSION=2.1.14
+ENV ROCRO_COMPOSER_VERSION=2.8.9
 RUN EXPECTED_SIGNATURE="$(curl -q https://composer.github.io/installer.sig)" \
     && curl -sfLo /tmp/installer.php https://getcomposer.org/installer \
     && ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', '/tmp/installer.php');")" \
