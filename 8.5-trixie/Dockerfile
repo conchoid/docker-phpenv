@@ -1,4 +1,4 @@
-FROM php:8.3-cli-trixie
+FROM php:8.5-cli-trixie
 
 # Preset locale to en_US.UTF-8
 # https://docs.docker.com/samples/library/debian/#locales
@@ -57,8 +57,9 @@ ENV PHP_AUTOCONF=/usr/bin/autoconf
 # https://www.php.net/supported-versions.php
 ENV PREINSTALLED_VERSIONS="\
 8.1.34\n\
-8.2.30"
-# 8.3.29 system installed
+8.2.30\n\
+8.4.17"
+# 8.5.x system installed
 
 RUN phpenv global system \
     && system_php_ver=$(php -v | head -1 | sed -e "s/^PHP \([0-9.]*\).*$/\1/") \
@@ -95,4 +96,3 @@ ENV PATH="/opt/openssl-1.0.2/bin:${PATH}"
 ENV OPENSSL_CONF="/opt/openssl-1.0.2/openssl.cnf"
 
 WORKDIR /
-
