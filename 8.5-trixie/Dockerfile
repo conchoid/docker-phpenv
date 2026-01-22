@@ -24,7 +24,7 @@ RUN docker-php-ext-install bz2 xml
 # only by non-root users in plugins.
 ENV PATH="/composer/vendor/bin:$PATH"
 ENV COMPOSER_HOME=/composer
-ENV ROCRO_COMPOSER_VERSION=2.8.9
+ENV ROCRO_COMPOSER_VERSION=2.9.3
 RUN EXPECTED_SIGNATURE="$(curl -q https://composer.github.io/installer.sig)" \
     && curl -sfLo /tmp/installer.php https://getcomposer.org/installer \
     && ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', '/tmp/installer.php');")" \
@@ -37,7 +37,7 @@ RUN EXPECTED_SIGNATURE="$(curl -q https://composer.github.io/installer.sig)" \
 ENV PHPENV_ROOT=/opt/phpenv
 ENV PATH="${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV ROCRO_PHP_CFLAGS="-lssl -lcrypto -Wno-error"
-RUN ROCRO_PHPENV_VERSION=cb3f33f9f9ff257c95b24ce9786b23a91e51cd4d \
+RUN ROCRO_PHPENV_VERSION=adc99a7a64564c8ad942b4ee1b3ad630a5b1cf96 \
     && PHP_BUILD_VERSION=d7e20537d8dfa60bf38124ef771502a96176a1a5 \
     && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${ROCRO_PHPENV_VERSION}) \
@@ -69,6 +69,7 @@ RUN phpenv global system \
     && cp "$(phpenv which php-config)" "${version_bin_dir}" \
     && cp "$(phpenv which phar)" "${version_bin_dir}" \
     && cp "$(phpenv which phar.phar)" "${version_bin_dir}" \
+    && cp /usr/bin/composer "${version_bin_dir}" \
     && export CONFIGURE_OPTS="${ROCRO_PHP_CONFIGURE_OPTS}" \
     && export CFLAGS="${ROCRO_PHP_CFLAGS}" \
     && echo "${PREINSTALLED_VERSIONS}" | while read version;do \
