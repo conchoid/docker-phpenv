@@ -58,6 +58,7 @@ ENV PHP_AUTOCONF=/usr/bin/autoconf
 ENV PREINSTALLED_VERSIONS="\
 8.1.34\n\
 8.2.30\n\
+8.3.30\n\
 8.4.17"
 # 8.5.x system installed
 
