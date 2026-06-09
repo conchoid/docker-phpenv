@@ -38,7 +38,7 @@ ENV PHPENV_ROOT=/opt/phpenv
 ENV PATH="${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV ROCRO_PHP_CFLAGS="-lssl -lcrypto -Wno-error"
 RUN ROCRO_PHPENV_VERSION=adc99a7a64564c8ad942b4ee1b3ad630a5b1cf96 \
-    && PHP_BUILD_VERSION=d7e20537d8dfa60bf38124ef771502a96176a1a5 \
+    && PHP_BUILD_VERSION=068169fd17f54e3105620d525c6653399345090f \
     && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${ROCRO_PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
@@ -59,7 +59,7 @@ ENV PREINSTALLED_VERSIONS="\
 8.1.34\n\
 8.2.30\n\
 8.3.30\n\
-8.4.17"
+8.4.19"
 # 8.5.x system installed
 
 RUN phpenv global system \
