@@ -1,3 +1,4 @@
+# Docker Hub: conchoid/docker-phpenv:v1-2-8.3-bookworm
 FROM php:8.3.13-cli-bookworm
 
 # Preset locale to en_US.UTF-8

@@ -1,3 +1,4 @@
+# Docker Hub: conchoid/docker-phpenv:v1-1-8.3-trixie
 FROM php:8.3-cli-trixie
 
 # Preset locale to en_US.UTF-8

@@ -1,3 +1,4 @@
+# Docker Hub: conchoid/docker-phpenv:v1-1-8.3-bullseye
 FROM debian:bullseye
 
 # Preset locale to en_US.UTF-8
