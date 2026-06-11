@@ -1,0 +1,7 @@
+interface:
+  display_name: "Docker Phpenv Base Image Update"
+  short_description: "docker-phpenv の Debian 系更新手順"
+  default_prompt: "Use $docker-phpenv-base-image-update to update docker-phpenv for a new Debian release and validate PHP build compatibility."
+
+policy:
+  allow_implicit_invocation: true
