@@ -95,9 +95,4 @@ RUN wget -O openssl-1.0.2u.tar.gz https://github.com/openssl/openssl/releases/do
 ENV PATH="/opt/openssl-1.0.2/bin:${PATH}"
 ENV OPENSSL_CONF="/opt/openssl-1.0.2/openssl.cnf"
 
-RUN groupadd --system phpenv \
-    && useradd --system --create-home --gid phpenv --shell /bin/bash phpenv \
-    && chown -R phpenv:phpenv "${COMPOSER_HOME}" "${PHPENV_ROOT}" /usr/local/src /opt/openssl-1.0.2
-
 WORKDIR /
-USER phpenv
