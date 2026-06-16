@@ -1,21 +1,20 @@
-# Docker Hub: conchoid/docker-phpenv:v1-2-8.5-trixie
+# Docker Hub: conchoid/docker-phpenv:v1-3-8.5-trixie
 FROM php:8.5-cli-trixie
 
 # Preset locale to en_US.UTF-8
 # https://docs.docker.com/samples/library/debian/#locales
-RUN apt-get update && apt-get install -y locales && apt-get clean && rm -rf /var/lib/apt/lists/* \
-    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-ENV LANG=en_US.UTF-8
-ENV LANGUAGE=en_US:en
-ENV LC_ALL=en_US.UTF-8
-
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    locales \
     wget curl git git-lfs subversion \
     build-essential autoconf dpkg-dev file g++ gcc libc-dev make pkg-config libtool \
     bison re2c libxml2-dev libsqlite3-dev libssl-dev libcurl4-openssl-dev libonig-dev \
     zlib1g-dev libbz2-dev libpng-dev libjpeg-dev libreadline-dev libtidy-dev \
     libxslt-dev libzip-dev libicu-dev apt-transport-https lsb-release ca-certificates \
-   && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 RUN docker-php-ext-install bz2 xml
 
@@ -26,12 +25,13 @@ RUN docker-php-ext-install bz2 xml
 ENV PATH="/composer/vendor/bin:$PATH"
 ENV COMPOSER_HOME=/composer
 ENV ROCRO_COMPOSER_VERSION=2.9.3
-RUN EXPECTED_SIGNATURE="$(curl -q https://composer.github.io/installer.sig)" \
-    && curl -sfLo /tmp/installer.php https://getcomposer.org/installer \
+RUN EXPECTED_SIGNATURE="$(curl -fsSL --proto '=https' --tlsv1.2 https://composer.github.io/installer.sig)" \
+    && curl -fsSL --proto '=https' --tlsv1.2 -o /tmp/installer.php https://getcomposer.org/installer \
     && ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', '/tmp/installer.php');")" \
     && if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then echo 'ERROR: Invalid installer signature' && rm /tmp/installer.php && exit 1; fi \
     && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${ROCRO_COMPOSER_VERSION} \
     && rm /tmp/installer.php \
+    && mkdir -p "${COMPOSER_HOME}" \
     && composer --ansi --version --no-interaction
 
 # Install phpenv
@@ -85,17 +85,19 @@ RUN phpenv global system \
     && phpenv global system
 
 WORKDIR /usr/local/src
-RUN wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2u.tar.gz \
+ENV OPENSSL_102U_SHA256=ecd0c6ffb493dd06707d38b14bb4d8c2288bb7033735606569d8f90f89669d16
+RUN wget -O openssl-1.0.2u.tar.gz https://github.com/openssl/openssl/releases/download/OpenSSL_1_0_2u/openssl-1.0.2u.tar.gz \
+    && echo "${OPENSSL_102U_SHA256}  openssl-1.0.2u.tar.gz" | sha256sum -c - \
     && tar -xzf openssl-1.0.2u.tar.gz \
-    && rm openssl-1.0.2u.tar.gz
-
-WORKDIR /usr/local/src/openssl-1.0.2u
-RUN ./config --prefix=/opt/openssl-1.0.2 --openssldir=/opt/openssl-1.0.2 \
-    && make clean \
-    && make -j1 \
-    && make install
+    && (cd openssl-1.0.2u && ./config --prefix=/opt/openssl-1.0.2 --openssldir=/opt/openssl-1.0.2 && make clean && make -j1 && make install) \
+    && rm -rf openssl-1.0.2u openssl-1.0.2u.tar.gz
 
 ENV PATH="/opt/openssl-1.0.2/bin:${PATH}"
 ENV OPENSSL_CONF="/opt/openssl-1.0.2/openssl.cnf"
 
+RUN groupadd --system phpenv \
+    && useradd --system --create-home --gid phpenv --shell /bin/bash phpenv \
+    && chown -R phpenv:phpenv "${COMPOSER_HOME}" "${PHPENV_ROOT}" /usr/local/src /opt/openssl-1.0.2
+
 WORKDIR /
+USER phpenv
