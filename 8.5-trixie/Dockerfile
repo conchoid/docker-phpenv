@@ -5,13 +5,17 @@ FROM php:8.5-cli-trixie
 # https://docs.docker.com/samples/library/debian/#locales
 RUN apt-get update && apt-get install -y --no-install-recommends \
     locales \
-    wget curl git git-lfs subversion \
+    wget curl git subversion \
     build-essential autoconf dpkg-dev file g++ gcc libc-dev make pkg-config libtool \
     bison re2c libxml2-dev libsqlite3-dev libssl-dev libcurl4-openssl-dev libonig-dev \
     zlib1g-dev libbz2-dev libpng-dev libjpeg-dev libreadline-dev libtidy-dev \
     libxslt-dev libzip-dev libicu-dev apt-transport-https lsb-release ca-certificates \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY --from=conchoid/debian:trixie-slim /usr/local/bin/git-lfs /usr/local/bin/git-lfs
+RUN git lfs install
+
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
