@@ -1,0 +1,4 @@
+[submodule ".claude"]
+	path = .claude
+	url = git@github.com:tractrix/tractrix-skills.git
+	branch = conchoid-update
