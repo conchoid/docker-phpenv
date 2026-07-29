@@ -1,4 +1,4 @@
-# Docker Hub: conchoid/docker-phpenv:v1-4-8.5-trixie
+# Docker Hub: conchoid/docker-phpenv:v1-5-8.5-trixie
 FROM php:8.5-cli-trixie
 
 # Preset locale to en_US.UTF-8
@@ -61,7 +61,6 @@ ENV PHP_AUTOCONF=/usr/bin/autoconf
 # Install all latest versions excludes older than one year since EOL.
 # https://www.php.net/supported-versions.php
 ENV PREINSTALLED_VERSIONS="\
-8.1.34\n\
 8.2.30\n\
 8.3.30\n\
 8.4.19"
