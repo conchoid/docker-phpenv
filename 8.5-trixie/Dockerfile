@@ -1,5 +1,5 @@
-# Docker Hub: conchoid/docker-phpenv:v1-1-8.5.8-trixie
-FROM php:8.5.8-cli-trixie
+# Docker Hub: conchoid/docker-phpenv:v1-1-8.5.11-trixie
+FROM php:8.5.11-cli-trixie
 
 # Preset locale to en_US.UTF-8
 # https://docs.docker.com/samples/library/debian/#locales
@@ -28,7 +28,7 @@ RUN docker-php-ext-install bz2 xml
 # only by non-root users in plugins.
 ENV PATH="/composer/vendor/bin:$PATH"
 ENV COMPOSER_HOME=/composer
-ENV ROCRO_COMPOSER_VERSION=2.9.3
+ENV ROCRO_COMPOSER_VERSION=2.10.3
 RUN EXPECTED_SIGNATURE="$(curl -fsSL --proto '=https' --tlsv1.2 https://composer.github.io/installer.sig)" \
     && curl -fsSL --proto '=https' --tlsv1.2 -o /tmp/installer.php https://getcomposer.org/installer \
     && ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', '/tmp/installer.php');")" \
@@ -42,8 +42,8 @@ RUN EXPECTED_SIGNATURE="$(curl -fsSL --proto '=https' --tlsv1.2 https://composer
 ENV PHPENV_ROOT=/opt/phpenv
 ENV PATH="${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV ROCRO_PHP_CFLAGS="-lssl -lcrypto -Wno-error"
-RUN ROCRO_PHPENV_VERSION=adc99a7a64564c8ad942b4ee1b3ad630a5b1cf96 \
-    && PHP_BUILD_VERSION=068169fd17f54e3105620d525c6653399345090f \
+RUN ROCRO_PHPENV_VERSION=7f5b90805fd1ae6dca8752d72656847a0dd90246 \
+    && PHP_BUILD_VERSION=f4d80057ec6437675a119e5a72655c92e2e870f3 \
     && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${ROCRO_PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
@@ -61,9 +61,9 @@ ENV PHP_AUTOCONF=/usr/bin/autoconf
 # Install all latest versions excludes older than one year since EOL.
 # https://www.php.net/supported-versions.php
 ENV PREINSTALLED_VERSIONS="\
-8.2.30\n\
-8.3.30\n\
-8.4.19"
+8.2.33\n\
+8.3.33\n\
+8.4.25"
 # 8.5.x system installed
 
 RUN phpenv global system \
