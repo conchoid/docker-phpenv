@@ -5,7 +5,7 @@ FROM php:8.5.11-cli-trixie
 # https://docs.docker.com/samples/library/debian/#locales
 RUN apt-get update && apt-get install -y --no-install-recommends \
     locales \
-    wget curl git subversion \
+    wget curl git connect-proxy subversion \
     build-essential autoconf dpkg-dev file g++ gcc libc-dev make pkg-config libtool \
     bison re2c libxml2-dev libsqlite3-dev libssl-dev libcurl4-openssl-dev libonig-dev \
     zlib1g-dev libbz2-dev libpng-dev libjpeg-dev libreadline-dev libtidy-dev \
