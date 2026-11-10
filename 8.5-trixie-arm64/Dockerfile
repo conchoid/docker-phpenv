@@ -1,5 +1,5 @@
-# Docker Hub: conchoid/docker-phpenv:v1-1-8.5.11-trixie-arm64
-FROM php:8.5.11-cli-trixie
+# Docker Hub: conchoid/docker-phpenv:v1-1-8.5.12-trixie-arm64
+FROM php:8.5.12-cli-trixie
 
 # Preset locale to en_US.UTF-8
 # https://docs.docker.com/samples/library/debian/#locales
@@ -43,7 +43,7 @@ ENV PHPENV_ROOT=/opt/phpenv
 ENV PATH="${PHPENV_ROOT}/shims:${PHPENV_ROOT}/bin:${PATH}"
 ENV ROCRO_PHP_CFLAGS="-lssl -lcrypto -Wno-error"
 RUN ROCRO_PHPENV_VERSION=7f5b90805fd1ae6dca8752d72656847a0dd90246 \
-    && PHP_BUILD_VERSION=f4d80057ec6437675a119e5a72655c92e2e870f3 \
+    && PHP_BUILD_VERSION=48f66c3c15eaead0ef362b5349dc85cc24195da3 \
     && git clone https://github.com/phpenv/phpenv.git ${PHPENV_ROOT} \
     && (cd ${PHPENV_ROOT} && git checkout ${ROCRO_PHPENV_VERSION}) \
     && git clone https://github.com/php-build/php-build ${PHPENV_ROOT}/plugins/php-build \
@@ -61,9 +61,9 @@ ENV PHP_AUTOCONF=/usr/bin/autoconf
 # Install all latest versions excludes older than one year since EOL.
 # https://www.php.net/supported-versions.php
 ENV PREINSTALLED_VERSIONS="\
-8.2.33\n\
-8.3.33\n\
-8.4.25"
+8.2.35\n\
+8.3.36\n\
+8.4.27"
 # 8.5.x system installed
 
 RUN phpenv global system \
